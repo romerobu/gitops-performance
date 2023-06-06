@@ -1,0 +1,11 @@
+apiVersion: integreatly.org/v1alpha1
+kind: Grafana
+metadata:
+  name: example
+  namespace: grafana
+spec:
+  config:
+    auth.basic:
+      enabled: true
+  ingress:
+    enabled: true
