@@ -15,7 +15,7 @@ URL="https://prometheus-k8s-openshift-monitoring.apps.cluster-c2djb.c2djb.sandbo
 
 {
     read
-    while IFS=: read -r p1 p2; 
+    while IFS=: read -r p1 p2 p3; 
     do 
         case $p1 in
             ''|\#*) continue ;;         # skip blank lines and lines starting with #
@@ -26,9 +26,10 @@ URL="https://prometheus-k8s-openshift-monitoring.apps.cluster-c2djb.c2djb.sandbo
         oc delete pod --all -n gitops-test
         sleep 5
 
-        printf 'Nº test: %s, Amount apps: %s\n' "$p1" "$p2"
+        printf 'Nº test: %s, Apps per repo: %s, Apps of apps: %s\n' "$p1" "$p2" "$p3"
 
-        AMOUNT_APPS=$p2
+        APPS_PER_REPO=$p2
+        APPS_OF_APPS=$p3
         TEST_START=$(date '+%m/%d/%Y %H:%M:%S')
         IDENTIFIER=$RANDOM
 
@@ -43,12 +44,18 @@ URL="https://prometheus-k8s-openshift-monitoring.apps.cluster-c2djb.c2djb.sandbo
         argocd login $ARGO_SERVER --username admin --password $ADMIN_PASSWORD --insecure
 
         echo "Execution ID: $IDENTIFIER" > $DIR/results/iteration-$ITERATION/$IDENTIFIER/data
-        echo "Amount of apps: $AMOUNT_APPS" >> $DIR/results/iteration-$ITERATION/$IDENTIFIER/data
+        echo "Apps per repo: $APPS_PER_REPO" >> $DIR/results/iteration-$ITERATION/$IDENTIFIER/data
+        echo "Apps of apps: $APPS_OF_APPS" >> $DIR/results/iteration-$ITERATION/$IDENTIFIER/data
 
-        sh create-workloads.sh $IDENTIFIER $AMOUNT_APPS
-
+        sh scripts/create-workloads.sh $IDENTIFIER $APPS_PER_REPO $APPS_OF_APPS
+        sh scripts/update-repo.sh $IDENTIFIER app-name
+        sh scripts/update-pacakage-push.sh app-values
+        
+        rm -rf apps/deploy-apps-of-apps/openshift
+        helm template apps/deploy-apps-of-apps/ --output-dir apps/deploy-apps-of-apps/openshift
+        oc apply -f apps/deploy-apps-of-apps/openshift/deploy-apps-of-apps/templates/
+        
         # Detect when initial sync has finished
-        # argocd app wait -l app.kubernetes.io/id=$IDENTIFIER
 
         while true;
         do  
@@ -64,7 +71,12 @@ URL="https://prometheus-k8s-openshift-monitoring.apps.cluster-c2djb.c2djb.sandbo
 
         # Push changes and sync apps
 
-        sh ./update-repo.sh $IDENTIFIER app-$IDENTIFIER
+        sh scripts/update-repo.sh $IDENTIFIER app-$IDENTIFIER
+        sh scripts/update-pacakage-push.sh app-values
+        
+        rm -rf apps/deploy-apps-of-apps/openshift
+        helm template apps/deploy-apps-of-apps/ --output-dir apps/deploy-apps-of-apps/openshift
+        oc apply -f apps/deploy-apps-of-apps/openshift/deploy-apps-of-apps/templates/
         # log when repo was updated
 
         # Detect when syncing has finished
@@ -82,8 +94,12 @@ URL="https://prometheus-k8s-openshift-monitoring.apps.cluster-c2djb.c2djb.sandbo
         done
         # log when sync ends
 
-        #argocd app wait -l app.kubernetes.io/id=$IDENTIFIER
-        sh ./update-repo.sh $IDENTIFIER app-$IDENTIFIER-2
+        sh scripts/update-repo.sh $IDENTIFIER app-$IDENTIFIER-2
+        sh scripts/update-pacakage-push.sh app-values
+        
+        rm -rf apps/deploy-apps-of-apps/openshift
+        helm template apps/deploy-apps-of-apps/ --output-dir apps/deploy-apps-of-apps/openshift
+        oc apply -f apps/deploy-apps-of-apps/openshift/deploy-apps-of-apps/templates/
 
         sleep 182
 
@@ -98,8 +114,6 @@ URL="https://prometheus-k8s-openshift-monitoring.apps.cluster-c2djb.c2djb.sandbo
                 
         done
 
-        #argocd app wait -l app.kubernetes.io/id=$IDENTIFIER
-
         # Then get metrics and alerts fired during the test
 
         CURRENT_TIME=$(date '+%m/%d/%Y %H:%M:%S')
@@ -107,9 +121,9 @@ URL="https://prometheus-k8s-openshift-monitoring.apps.cluster-c2djb.c2djb.sandbo
         CURRENT_IN_SECONDS=$(date --date "$CURRENT_TIME" +%s)
         diff=$((CURRENT_IN_SECONDS - START_IN_SECONDS))
 
-        sh get-metrics.sh $diff $IDENTIFIER iteration-$ITERATION
+        sh scripts/get-metrics.sh $diff $IDENTIFIER iteration-$ITERATION
 
-        sh clean-environment.sh $IDENTIFIER
+        sh scripts/clean-environment.sh $IDENTIFIER
 
         echo "$p1,$IDENTIFIER,$TEST_START,$CURRENT_TIME,objects_by_app,$AMOUNT_APPS,amount_apps_sync,sync_freq,repo_size,crds,app_of_apps,concurrent_proc" >> $DIR/results/iteration-$ITERATION/results.csv 
     done 

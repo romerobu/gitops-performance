@@ -1,3 +1,0 @@
-nº,id,start_time,end_time,objects_by_app,apps_per_repo,amount_apps_sync,sync_freq,repo_size,crds,app_of_apps,concurrent_proc
-1,2858,06/07/2023 13:22:25,06/07/2023 13:29:59,objects_by_app,50,amount_apps_sync,sync_freq,repo_size,crds,app_of_apps,concurrent_proc
-2,11658,06/07/2023 13:32:39,06/07/2023 13:39:51,objects_by_app,30,amount_apps_sync,sync_freq,repo_size,crds,app_of_apps,concurrent_proc

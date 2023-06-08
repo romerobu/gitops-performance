@@ -12,9 +12,10 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: default
   source:
-    parameters:
-    - name: "app-of-apps.set"
-      value: {{ $i }}
+    helm: 
+      parameters:
+        - name: set
+          value: "{{ $i }}"
     path: .
     repoURL: 'https://github.com/romerobu/app-of-apps' 
     targetRevision: main # branch according to amount of apps per repo
