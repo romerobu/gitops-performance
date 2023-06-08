@@ -1,0 +1,4 @@
+amount: 3 # means 2 # must be the amount of app-of-apps to be deployed
+uid: 4856
+argo:
+  namespace: gitops-test

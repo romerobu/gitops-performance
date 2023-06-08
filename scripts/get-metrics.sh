@@ -10,7 +10,7 @@ ITERATION=${3}
 DIR=$(pwd)
 
 export TOKEN=$( oc whoami -t)
-export URL=https://prometheus-k8s-openshift-monitoring.apps.cluster-68cmn.68cmn.sandbox2789.opentlc.com/api
+export URL=https://prometheus-k8s-openshift-monitoring.apps.cluster-c2djb.c2djb.sandbox3098.opentlc.com/api
 
 echo -e "Duration: " $TIME "s \n" >> $DIR/results/$IDENTIFIER/data
 mkdir $DIR/results/$ITERATION/$IDENTIFIER/metrics

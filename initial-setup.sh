@@ -1,4 +1,4 @@
-oc login -u kubeadmin -p HoyHt-kBfcJ-FWUye-scQyX https://api.cluster-68cmn.68cmn.sandbox2789.opentlc.com:6443/
+oc login -u kubeadmin -p bq8L7-7hICE-s6PDt-Jm7Ac https://api.cluster-c2djb.c2djb.sandbox3098.opentlc.com:6443
 
 oc apply -f argo-configuration/1-gitops-test-namespace.yaml
 oc apply -f argo-configuration/2-gitops-subscription.yaml 
@@ -14,6 +14,7 @@ echo "Argo server: " $ARGO_SERVER
 echo "Argo admin password: " $ADMIN_PASSWORD
 
 oc apply -f argo-configuration/6-grafana-subscription.yaml
+sleep 60
 oc apply -f argo-configuration/7-grafana-instance.yaml
 sleep 60 # wait for operator to be installed
 oc project grafana

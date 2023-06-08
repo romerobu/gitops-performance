@@ -1,0 +1,1 @@
+{"status":"success","data":{"resultType":"vector","result":[{"metric":{"command":"apply","container":"argocd-application-controller","endpoint":"metrics","hostname":"argocd-application-controller-0","instance":"10.128.1.64:8082","job":"argocd-metrics","namespace":"gitops-test","pod":"argocd-application-controller-0","service":"argocd-metrics"},"value":[1686067649.293,"2.6"]}]}}
