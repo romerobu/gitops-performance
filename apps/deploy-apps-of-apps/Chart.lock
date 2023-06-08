@@ -1,0 +1,6 @@
+dependencies:
+- name: app-of-apps
+  repository: file://../app-of-apps
+  version: 0.1.0
+digest: sha256:aa766047f9f236dd829750b4ce4f7d8339842da7470738f9e676e3595562339c
+generated: "2023-06-08T18:57:07.15128856+02:00"
