@@ -1,7 +1,4 @@
-# Nº test, apps per repo, app of apps
-1:10:5
-# Sceneario 2
-# 2:5:10
-
-
-
+# Nº test, apps per repo, app of apps, sync frequency
+1:5:3:2
+# Scenario 2
+2:5:2:2

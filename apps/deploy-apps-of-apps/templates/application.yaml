@@ -14,8 +14,8 @@ spec:
   source:
     helm: 
       parameters:
-        - name: set
-          value: "{{ $i }}"
+        - name: amount
+          value: "{{ $i }}"       
     path: .
     repoURL: 'https://github.com/romerobu/app-of-apps' 
     targetRevision: main # branch according to amount of apps per repo
@@ -23,4 +23,4 @@ spec:
     automated:
       prune: true
       selfHeal: true
-{{- end }}  
+{{- end }}

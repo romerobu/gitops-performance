@@ -2,11 +2,11 @@
 
 set -x
 
-REPO=$1 # app-chart, app-library or app-values
+repo=$1 # app-chart, app-library or app-values
 
-cd apps/$REPO
+cd apps/${repo}
 
-if [ "$REPO" = "app-library" ]; then
+if [ "${repo}" = "app-library" ]; then
 
     helm package .
     git add .
@@ -14,7 +14,7 @@ if [ "$REPO" = "app-library" ]; then
     echo "Pushing data to remote server!!!"
     git push -u origin main
 
-elif [ "$REPO" = "app-chart" ]; then
+elif [ "${repo}" = "app-chart" ]; then
     
     helm repo update
     helm dep up
@@ -24,15 +24,15 @@ elif [ "$REPO" = "app-chart" ]; then
     echo "Pushing data to remote server!!!"
     git push -u origin main
 
-elif [ "$REPO" = "app-values" ]; then
+elif [ "${repo}" = "app-values" ]; then
 
 
     for app in $(pwd)/dev/*/*/; do
         
         cd $app
         echo "You are here:" $(pwd)
-        helm repo update
-        helm dep update
+        #helm repo update
+        #helm dep update
         git add .
         git commit -m "updating repo for testing"
         echo "Pushing data to remote server!!!"
