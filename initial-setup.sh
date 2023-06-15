@@ -9,9 +9,11 @@ oc apply -f argo-configuration/5-sa-rolebinding-openshit-gitops.yaml
 
 ARGO_SERVER=$(oc get route -n gitops-test argocd-server  -o jsonpath='{.spec.host}')
 ADMIN_PASSWORD=$(oc get secret argocd-cluster -n gitops-test  -o jsonpath='{.data.admin\.password}' | base64 -d)
+ARGOCD_TOKEN=$(argocd account generate-token --account test)
 
 echo "Argo server: " $ARGO_SERVER
 echo "Argo admin password: " $ADMIN_PASSWORD
+echo "Argo test token: " $ARGOCD_TOKEN
 
 oc apply -f argo-configuration/6-grafana-subscription.yaml
 sleep 60

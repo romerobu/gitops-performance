@@ -1,0 +1,34 @@
+# Source: jump-app/charts/jump-app-micros/templates/jump-app/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ $.Values.app.labels }}
+    app.kubernetes.io/id: '{{ $.Values.app.uid }}'
+    version: v1
+  name: {{ $.Values.app.appname }}-test
+  namespace: {{ $.Values.app.namespace }}
+spec:
+  replicas: {{ $.Values.app.replicas }}
+  selector:
+    matchLabels:
+      app: back-golang
+  template:
+    metadata:
+      labels:
+        name: back-golang-v1
+        app: back-golang
+        version: v1
+        app.kubernetes.io/id: '{{ $.Values.app.uid }}'
+    spec:
+      containers:
+      - image: quay.io/acidonpe/jump-app-back-golang:latest
+        imagePullPolicy: Always
+        name: back-golang-v1
+        ports:
+          - containerPort: 8442
+            protocol: TCP
+        resources: {}
+        env:  
+          - name: APP_REF_NAME
+            value: jump-app

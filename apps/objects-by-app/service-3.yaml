@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: back-golang
+    version: v1
+    app.kubernetes.io/id: '{{ $.Values.app.uid }}'
+  name: {{ $.Values.app.appname }}-test-2
+  namespace: {{ $.Values.app.namespace }}
+spec:
+  ports:
+    - name: http-8442
+      port: 8442
+      protocol: 
+      targetPort: 8442   
+  selector:
+    app: back-golang
+    version: v1

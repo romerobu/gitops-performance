@@ -6,9 +6,8 @@ set -x
 export identifier="$1" # uuid
 apps_per_repo=$2 # amount of apps per repo
 apps_of_apps=$3 # amount of apps of apps
+
 dir=$(pwd)
-# Pending to be defined
-# OBJECTS_MANAGED_BY_APP=$4 #objects managed by app
 
 rm -rf $dir/apps/app-values/dev/*
 
@@ -36,9 +35,9 @@ apps_per_repo=$((${apps_per_repo}+1)) yq e -i '.set = env(apps_per_repo)' ${dir}
 cd ${dir}/apps/app-of-apps/
 
 git add .
-git commit -m "updating repo for testing"
-echo "Pushing data to remote server!!!"
-git push -u origin main
+git commit -m "updating repo for testing" --quiet
+#echo "Pushing data to remote server!!!"
+git push -u origin main --quiet
 
 cd ../../
 helm dep up apps/deploy-apps-of-apps/

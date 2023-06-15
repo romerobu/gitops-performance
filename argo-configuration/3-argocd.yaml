@@ -4,6 +4,8 @@ metadata:
   name: argocd
   namespace: gitops-test
 spec:
+  extraConfig:
+    accounts.test: apiKey, login
   controller:
     resources:
       limits:
@@ -20,11 +22,13 @@ spec:
       requests:
         cpu: 250m
         memory: 128Mi
-    enabled: false
+    enabled: true
   rbac:
     defaultPolicy: ''
     policy: |
       g, system:cluster-admins, role:admin
+      g, test, role:test
+      p, role:test, projects,*, *, allow      
     scopes: '[groups]'
   redis:
     resources:

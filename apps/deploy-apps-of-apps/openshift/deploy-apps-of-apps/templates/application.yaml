@@ -6,7 +6,7 @@ metadata:
   name: app-of-apps-1 
   namespace: gitops-test
   labels:
-    app.kubernetes.io/id: '31466'
+    app.kubernetes.io/id: '6774'
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -31,7 +31,7 @@ metadata:
   name: app-of-apps-2 
   namespace: gitops-test
   labels:
-    app.kubernetes.io/id: '31466'
+    app.kubernetes.io/id: '6774'
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -56,7 +56,7 @@ metadata:
   name: app-of-apps-3 
   namespace: gitops-test
   labels:
-    app.kubernetes.io/id: '31466'
+    app.kubernetes.io/id: '6774'
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -66,6 +66,56 @@ spec:
       parameters:
         - name: amount
           value: "3"       
+    path: .
+    repoURL: 'https://github.com/romerobu/app-of-apps' 
+    targetRevision: main # branch according to amount of apps per repo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+# Source: deploy-apps-of-apps/templates/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps-4 
+  namespace: gitops-test
+  labels:
+    app.kubernetes.io/id: '6774'
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    helm: 
+      parameters:
+        - name: amount
+          value: "4"       
+    path: .
+    repoURL: 'https://github.com/romerobu/app-of-apps' 
+    targetRevision: main # branch according to amount of apps per repo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+# Source: deploy-apps-of-apps/templates/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps-5 
+  namespace: gitops-test
+  labels:
+    app.kubernetes.io/id: '6774'
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    helm: 
+      parameters:
+        - name: amount
+          value: "5"       
     path: .
     repoURL: 'https://github.com/romerobu/app-of-apps' 
     targetRevision: main # branch according to amount of apps per repo

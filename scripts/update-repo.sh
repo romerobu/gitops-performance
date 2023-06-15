@@ -2,10 +2,10 @@
 
 set -x
 
-echo "Updating repo for testing"
+apps_to_be_synced=${3}
+apps_of_apps=${4}
 
-#yq e -i '.app.uid = env(IDENTIFIER)' app/values.yaml
-#yq e -i '.app.labels = env(APP_NAME)' app/values.yaml
+apps=$(echo "scale=3; ${apps_to_be_synced}/100 * ${apps_of_apps}" | bc)
 
-identifier=$1 find apps/app-values/dev/*/*/values.yaml -exec yq e -i '.app-chart.app.uid = env(identifier)' {} \;
-app_name=$2 find apps/app-values/dev/*/*/values.yaml -exec yq e -i '.app-chart.app.labels = env(app_name)' {} \;
+identifier=${1} find apps/app-values/dev/ocp[1-${apps}]/*/values.yaml -exec yq e -i '.app-chart.app.uid = env(identifier)' {} \;
+app_name=${2} find apps/app-values/dev/ocp[1-${apps}]/*/values.yaml -exec yq e -i '.app-chart.app.labels = env(app_name)' {} \;

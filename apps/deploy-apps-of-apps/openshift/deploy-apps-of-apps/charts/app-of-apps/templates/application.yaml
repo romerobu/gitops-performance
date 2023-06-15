@@ -3,16 +3,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: application-4-1
+  name: application-6-1
   namespace: gitops-test
   labels:
-    app.kubernetes.io/id: '31466'
+    app.kubernetes.io/id: '6774'
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
   project: default
   source:
-    path: dev/ocp4/app1
+    path: dev/ocp6/app1
     repoURL: 'https://github.com/romerobu/app-values' # change url and branch to ocp3/app00/...
     targetRevision: main # branch according to amount of apps per repo
   syncPolicy:
@@ -24,16 +24,16 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: application-4-2
+  name: application-6-2
   namespace: gitops-test
   labels:
-    app.kubernetes.io/id: '31466'
+    app.kubernetes.io/id: '6774'
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
   project: default
   source:
-    path: dev/ocp4/app2
+    path: dev/ocp6/app2
     repoURL: 'https://github.com/romerobu/app-values' # change url and branch to ocp3/app00/...
     targetRevision: main # branch according to amount of apps per repo
   syncPolicy:
@@ -45,58 +45,16 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: application-4-3
+  name: application-6-3
   namespace: gitops-test
   labels:
-    app.kubernetes.io/id: '31466'
+    app.kubernetes.io/id: '6774'
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
   project: default
   source:
-    path: dev/ocp4/app3
-    repoURL: 'https://github.com/romerobu/app-values' # change url and branch to ocp3/app00/...
-    targetRevision: main # branch according to amount of apps per repo
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
----
-# Source: deploy-apps-of-apps/charts/app-of-apps/templates/application.yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: application-4-4
-  namespace: gitops-test
-  labels:
-    app.kubernetes.io/id: '31466'
-spec:
-  destination:
-    server: 'https://kubernetes.default.svc'
-  project: default
-  source:
-    path: dev/ocp4/app4
-    repoURL: 'https://github.com/romerobu/app-values' # change url and branch to ocp3/app00/...
-    targetRevision: main # branch according to amount of apps per repo
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
----
-# Source: deploy-apps-of-apps/charts/app-of-apps/templates/application.yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: application-4-5
-  namespace: gitops-test
-  labels:
-    app.kubernetes.io/id: '31466'
-spec:
-  destination:
-    server: 'https://kubernetes.default.svc'
-  project: default
-  source:
-    path: dev/ocp4/app5
+    path: dev/ocp6/app3
     repoURL: 'https://github.com/romerobu/app-values' # change url and branch to ocp3/app00/...
     targetRevision: main # branch according to amount of apps per repo
   syncPolicy:
