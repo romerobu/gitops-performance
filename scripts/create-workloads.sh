@@ -6,6 +6,7 @@ set -x
 export identifier="$1" # uuid
 apps_per_repo=$2 # amount of apps per repo
 apps_of_apps=$3 # amount of apps of apps
+annotation=$4
 
 dir=$(pwd)
 
@@ -26,6 +27,8 @@ for i in $(seq 1 ${apps_of_apps});do
     
     done
 done
+
+annotation=${annotation} yq e -i '.annotation.enabled = env(annotation)' ${dir}/apps/app-of-apps/values.yaml
 
 apps_of_apps=$((${apps_of_apps}+1)) yq e -i '.amount = env(apps_of_apps)' ${dir}/apps/app-of-apps/values.yaml
 apps_per_repo=$((${apps_per_repo}+1)) yq e -i '.set = env(apps_per_repo)' ${dir}/apps/app-of-apps/values.yaml

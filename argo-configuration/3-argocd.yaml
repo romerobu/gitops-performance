@@ -22,7 +22,7 @@ spec:
       requests:
         cpu: 250m
         memory: 128Mi
-    enabled: true
+    enabled: false
   rbac:
     defaultPolicy: ''
     policy: |

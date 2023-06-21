@@ -12,10 +12,11 @@ apps_to_be_synced=${7}
 dir=$(pwd)
 
 token=$(oc whoami -t)
-url="https://prometheus-k8s-openshift-monitoring.apps.cluster-j2d2t.j2d2t.sandbox545.opentlc.com/api"
+url="https://prometheus-k8s-openshift-monitoring.apps.cluster-nl29n.nl29n.sandbox1228.opentlc.com/api"
 
 export total_apps=$((${apps_per_repo} * ${apps_of_apps} + ${apps_of_apps}))
 
+echo "Total applications: ${total_apps}"
 echo "Total deployments expected to be updated for sync: ${apps_to_be_synced}" 
 echo "Total deployments expected to be updated: ${apps_to_be_synced}"  >> ${dir}/results/iteration-${iteration}/${identifier}/data
 

@@ -1,4 +1,4 @@
-oc login -u kubeadmin -p LHBmU-VK4hD-K7nGB-jaJCP https://api.cluster-j2d2t.j2d2t.sandbox545.opentlc.com:6443
+oc login -u kubeadmin -p KwyMM-S3NVV-E2iFi-2k7gx https://api.cluster-nl29n.nl29n.sandbox1228.opentlc.com:6443
 
 oc apply -f argo-configuration/1-gitops-test-namespace.yaml
 oc apply -f argo-configuration/2-gitops-subscription.yaml 

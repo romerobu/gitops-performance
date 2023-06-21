@@ -6,7 +6,7 @@ metadata:
   name: application-6-1
   namespace: gitops-test
   labels:
-    app.kubernetes.io/id: '6774'
+    app.kubernetes.io/id: '19375'
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -27,7 +27,7 @@ metadata:
   name: application-6-2
   namespace: gitops-test
   labels:
-    app.kubernetes.io/id: '6774'
+    app.kubernetes.io/id: '19375'
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -48,13 +48,160 @@ metadata:
   name: application-6-3
   namespace: gitops-test
   labels:
-    app.kubernetes.io/id: '6774'
+    app.kubernetes.io/id: '19375'
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
   project: default
   source:
     path: dev/ocp6/app3
+    repoURL: 'https://github.com/romerobu/app-values' # change url and branch to ocp3/app00/...
+    targetRevision: main # branch according to amount of apps per repo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+# Source: deploy-apps-of-apps/charts/app-of-apps/templates/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: application-6-4
+  namespace: gitops-test
+  labels:
+    app.kubernetes.io/id: '19375'
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    path: dev/ocp6/app4
+    repoURL: 'https://github.com/romerobu/app-values' # change url and branch to ocp3/app00/...
+    targetRevision: main # branch according to amount of apps per repo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+# Source: deploy-apps-of-apps/charts/app-of-apps/templates/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: application-6-5
+  namespace: gitops-test
+  labels:
+    app.kubernetes.io/id: '19375'
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    path: dev/ocp6/app5
+    repoURL: 'https://github.com/romerobu/app-values' # change url and branch to ocp3/app00/...
+    targetRevision: main # branch according to amount of apps per repo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+# Source: deploy-apps-of-apps/charts/app-of-apps/templates/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: application-6-6
+  namespace: gitops-test
+  labels:
+    app.kubernetes.io/id: '19375'
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    path: dev/ocp6/app6
+    repoURL: 'https://github.com/romerobu/app-values' # change url and branch to ocp3/app00/...
+    targetRevision: main # branch according to amount of apps per repo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+# Source: deploy-apps-of-apps/charts/app-of-apps/templates/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: application-6-7
+  namespace: gitops-test
+  labels:
+    app.kubernetes.io/id: '19375'
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    path: dev/ocp6/app7
+    repoURL: 'https://github.com/romerobu/app-values' # change url and branch to ocp3/app00/...
+    targetRevision: main # branch according to amount of apps per repo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+# Source: deploy-apps-of-apps/charts/app-of-apps/templates/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: application-6-8
+  namespace: gitops-test
+  labels:
+    app.kubernetes.io/id: '19375'
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    path: dev/ocp6/app8
+    repoURL: 'https://github.com/romerobu/app-values' # change url and branch to ocp3/app00/...
+    targetRevision: main # branch according to amount of apps per repo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+# Source: deploy-apps-of-apps/charts/app-of-apps/templates/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: application-6-9
+  namespace: gitops-test
+  labels:
+    app.kubernetes.io/id: '19375'
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    path: dev/ocp6/app9
+    repoURL: 'https://github.com/romerobu/app-values' # change url and branch to ocp3/app00/...
+    targetRevision: main # branch according to amount of apps per repo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+# Source: deploy-apps-of-apps/charts/app-of-apps/templates/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: application-6-10
+  namespace: gitops-test
+  labels:
+    app.kubernetes.io/id: '19375'
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    path: dev/ocp6/app10
     repoURL: 'https://github.com/romerobu/app-values' # change url and branch to ocp3/app00/...
     targetRevision: main # branch according to amount of apps per repo
   syncPolicy:

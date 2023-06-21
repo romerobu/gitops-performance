@@ -6,7 +6,7 @@ metadata:
   name: app-of-apps-1 
   namespace: gitops-test
   labels:
-    app.kubernetes.io/id: '6774'
+    app.kubernetes.io/id: '19375'
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -31,7 +31,7 @@ metadata:
   name: app-of-apps-2 
   namespace: gitops-test
   labels:
-    app.kubernetes.io/id: '6774'
+    app.kubernetes.io/id: '19375'
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -56,7 +56,7 @@ metadata:
   name: app-of-apps-3 
   namespace: gitops-test
   labels:
-    app.kubernetes.io/id: '6774'
+    app.kubernetes.io/id: '19375'
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -81,7 +81,7 @@ metadata:
   name: app-of-apps-4 
   namespace: gitops-test
   labels:
-    app.kubernetes.io/id: '6774'
+    app.kubernetes.io/id: '19375'
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
@@ -106,7 +106,7 @@ metadata:
   name: app-of-apps-5 
   namespace: gitops-test
   labels:
-    app.kubernetes.io/id: '6774'
+    app.kubernetes.io/id: '19375'
 spec:
   destination:
     server: 'https://kubernetes.default.svc'

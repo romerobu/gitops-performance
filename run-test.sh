@@ -7,7 +7,7 @@ iteration=$(date '+%m-%d-%Y-%H:%M:%S')
 mkdir -p ${dir}/results
 mkdir ${dir}/results/iteration-${iteration}
 touch ${dir}/results/iteration-${iteration}/results.csv
-echo 'nº,id,start_time,end_time,objects_by_app,apps_per_repo,app_of_apps,amount_apps_sync,sync_freq,repo_size,argo_api_req,webhook,annotation,sync_dur_1,sync_dur_2,app_reconcile_95,git_req_dur_ls_95,git_req_dur_95,repo_pen_req,exec_pen_req,app_reconcile_inc,k8s_req_total' > ${dir}/results/iteration-${iteration}/results.csv 
+echo 'nº;id;start_time;end_time;objects_by_app;apps_per_repo;app_of_apps;amount_apps_sync;sync_freq;repo_size;argo_api_req;webhook;annotation;sync_dur_1;sync_dur_2;app_controller_restart;app_reconcile_95;git_req_dur_ls_95;git_req_dur_fetch_95;repo_pen_req;exec_pen_req;app_reconcile_inc;k8s_req_total;cpu_avg_usage;cpu_avg_usage_%;cpu_max_usage;cpu_limit_%;memory_avg_usage;memory_avg_usage_%;memory_max_usage;memory_limit_%' > ${dir}/results/iteration-${iteration}/results.csv 
 
 
 {
@@ -55,8 +55,10 @@ echo 'nº,id,start_time,end_time,objects_by_app,apps_per_repo,app_of_apps,amount
         echo "Apps per repo: ${apps_per_repo}" >> ${PATH_TO_RESULTS}/data
         echo "Apps of apps: ${apps_of_apps}" >> ${PATH_TO_RESULTS}/data
         echo "Sync frequency: ${sync_freq}" >> ${PATH_TO_RESULTS}/data
+        echo "Apps to be synced: ${apps_sync}" >> ${PATH_TO_RESULTS}/data
+        echo "Annotation path: ${annotation}" >> ${PATH_TO_RESULTS}/data
         
-        sh scripts/create-workloads.sh ${identifier} ${apps_per_repo} ${apps_of_apps}
+        sh scripts/create-workloads.sh ${identifier} ${apps_per_repo} ${apps_of_apps} ${annotation}
         
         if [ ${sync_freq} -ge 1 ]; then
 
@@ -77,8 +79,11 @@ echo 'nº,id,start_time,end_time,objects_by_app,apps_per_repo,app_of_apps,amount
             fi
 
             echo "Total deployments: " ${total_deployments}
+            
             # Initial sync sets initial label (app-name) to all apps (total_deployments)
-            sh scripts/sync_workload.sh ${identifier} app-name ${iteration} ${id} 100 ${apps_of_apps} ${objects_by_app}
+
+            sh scripts/objects_by_chart.sh ${objects_by_app}
+            sh scripts/sync_workload.sh ${identifier} app-name ${iteration} ${id} 100 ${apps_of_apps}
             sh scripts/sync.sh "${id}-${identifier}" app-name ${apps_per_repo} ${apps_of_apps} ${iteration} 1 ${total_deployments}
 
             echo "All done"
@@ -105,7 +110,7 @@ echo 'nº,id,start_time,end_time,objects_by_app,apps_per_repo,app_of_apps,amount
             fi
             
             echo "Total deployments: ${total_deployments} - " 
-            sh scripts/sync_workload.sh ${identifier} app-${identifier} ${iteration} ${id} ${apps_sync} ${apps_of_apps} ${objects_by_app}
+            sh scripts/sync_workload.sh ${identifier} app-${identifier} ${iteration} ${id} ${apps_sync} ${apps_of_apps}
             sh scripts/sync.sh "${id}-${identifier}" "app-${identifier}" ${apps_per_repo} ${apps_of_apps} ${iteration} 2 ${total_deployments}
 
             echo "All done"
@@ -132,7 +137,7 @@ echo 'nº,id,start_time,end_time,objects_by_app,apps_per_repo,app_of_apps,amount
             fi
 
             echo "Total deployments: " ${total_deployments}
-            sh scripts/sync_workload.sh ${identifier} "app-${identifier}-2" ${iteration} ${id} ${apps_sync} ${apps_of_apps} ${objects_by_app}
+            sh scripts/sync_workload.sh ${identifier} "app-${identifier}-2" ${iteration} ${id} ${apps_sync} ${apps_of_apps}
             sh scripts/sync.sh "${id}-${identifier}" "app-${identifier}-2" ${apps_per_repo} ${apps_of_apps} ${iteration} 3 ${total_deployments}
 
             echo "All done"
@@ -173,7 +178,8 @@ echo 'nº,id,start_time,end_time,objects_by_app,apps_per_repo,app_of_apps,amount
               fi
             fi
         done < "$input"
-         
+        
+    
         sh scripts/get-metrics.sh ${diff} "${id}-${identifier}" "iteration-${iteration}" ${results} ${id} "${test_start}" "${current_time}" ${objects_by_app} ${apps_per_repo} ${apps_of_apps} ${apps_sync} ${sync_freq} ${repo_size} ${api_req} ${webhook} ${annotation} ${sync_dur1} ${sync_dur2}
         
         # Finish load testing
